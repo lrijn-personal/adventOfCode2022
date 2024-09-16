@@ -1,0 +1,9 @@
+            File myFile = new File("com/lrijn/day2/input.txt");
+            Scanner scanner = new Scanner(myFile);
+            StringBuilder fileContent = new StringBuilder();
+            while(scanner.hasNextLine()){
+                String data = scanner.nextLine();
+                fileContent.append(data).append("\n");
+            }
+            scanner.close();
+            String input = fileContent.toString();
