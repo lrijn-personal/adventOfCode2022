@@ -97,7 +97,7 @@ public class Day2Part2 {
 
                 }
 
-            System.out.println(score);
+            System.out.println("The final score is: " + score);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
