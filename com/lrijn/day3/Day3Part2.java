@@ -4,20 +4,23 @@ import com.lrijn.FileReading;
 
 import java.util.ArrayList;
 
+import static java.lang.Character.isLowerCase;
+
 public class Day3Part2 {
     public static void main(String[] args) {
-        //String input = FileReading.readFile("com/lrijn/day3/input.txt");
-        String input = """
-                vJrwpWtwJgWrhcsFMMfFFhFp
-                jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-                PmmdzqPrVvPwwTWBwg
-                wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-                ttgJtRGJQctTZtZT
-                CrZsJsPPZsGzwwsLwLmpwMDw
-                """;
+        String input = FileReading.readFile("com/lrijn/day3/input.txt");
+//        String input = """
+//                vJrwpWtwJgWrhcsFMMfFFhFp
+//                jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+//                PmmdzqPrVvPwwTWBwg
+//                wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+//                ttgJtRGJQctTZtZT
+//                CrZsJsPPZsGzwwsLwLmpwMDw
+//                """;
 
 
         int counter = 0;
+        int finalScore = 0;
         String[] in = input.split("\n");
         ArrayList<String> groups = new ArrayList<>();
 
@@ -27,12 +30,16 @@ public class Day3Part2 {
             group.add(in[1+i]);
             group.add(in[2+i]);
 
-            int length = 0;
+            int length = 100;
+            int index = 1;
+            int shortestGroup =0;
             for(String gr : group){
                 int len = gr.length();
-                if(len > length){
+                if(len < length){
                     length = len;
+                    shortestGroup = index;
                 }
+                index++;
             }
 
             ArrayList<Character> rucksack1 = new ArrayList<>();
@@ -48,19 +55,47 @@ public class Day3Part2 {
                 rucksack3.add(group.get(2).charAt(count));
             }
 
-//            for(int count = 0; count < group.get(0).length() ; count++){
-//                if(rucksack1.contains(rucksack2.get(count))){
-//                    System.out.println(rucksack2.get(count));
-//                }
-//                else if (rucksack1.contains(rucksack3.get(count))){
-//                    System.out.println(rucksack3.get(count));
-//                }
-//            }
-            System.out.println(rucksack1);
-            System.out.println(rucksack2);
-            System.out.println(rucksack3);
+            char character = 'a';
+            if (shortestGroup == 1){
+                for (char ch: rucksack1){
+                    if(rucksack2.contains(ch)){
+                        if(rucksack3.contains(ch)){
+                            character = ch;
+                        }
+                    }
+                }
+            }
+            if (shortestGroup == 2){
+                for (char ch: rucksack2){
+                    if(rucksack1.contains(ch)){
+                        if(rucksack3.contains(ch)){
+                            character = ch;
+                        }
+                    }
+                }
+            }
+            if (shortestGroup == 3){
+                for (char ch: rucksack3){
+                    if(rucksack1.contains(ch)){
+                        if(rucksack2.contains(ch)){
+                            character = ch;
+                        }
+                    }
+                }
+            }
+            int score = 0;
 
+            String alphabetLow = "abcdefghijklmnopqrstuvwxyz";
+            String alphabetHigh = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if(isLowerCase(character)){
+                score += alphabetLow.indexOf(character) + 1;
+            }else{
+                score += alphabetHigh.indexOf(character) + 27;
+            }
+            
+            finalScore += score;
 
         }
+        System.out.println("final score: " + finalScore);
     }
 }
