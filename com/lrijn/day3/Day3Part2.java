@@ -92,7 +92,7 @@ public class Day3Part2 {
             }else{
                 score += alphabetHigh.indexOf(character) + 27;
             }
-            
+
             finalScore += score;
 
         }
